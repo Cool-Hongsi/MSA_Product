@@ -48,20 +48,17 @@ module.exports = {
     }),
     // For MicroFrontend
     new ModuleFederationPlugin({
-      name: "product",
-      filename: "remoteEntry.js", // should be js.. ts does NOT work
+      name: "remoteProduct",
+      filename: "remoteEntry.js",
       exposes: {
         "./ProductCount": "./src/component/ProductCount",
         "./ProductName": "./src/component/ProductName",
       },
-      // If you specify your shared dependency as a singleton, they all consume the shared instance.
-      // And, eager means dependency will be ready to be consumed in the initial chunk.
       shared: {
         ...deps,
-        react: { singleton: true, eager: true, requiredVersion: deps.react },
+        react: { singleton: true, requiredVersion: deps.react },
         "react-dom": {
           singleton: true,
-          eager: true,
           requiredVersion: deps["react-dom"],
         },
       },
